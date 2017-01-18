@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
         private readonly float r_MaxEnergy;
         private float m_EnergyLeft;
 
-        public Engine(float i_MaxEnergy)
+        protected Engine(float i_MaxEnergy)
         {
             r_MaxEnergy = i_MaxEnergy;
             m_EnergyLeft = 0;

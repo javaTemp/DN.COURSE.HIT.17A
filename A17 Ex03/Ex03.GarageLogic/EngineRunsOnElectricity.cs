@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Ex03.GarageLogic
 {
-    class EngineRunsOnElectricity : Engine
+    public class EngineRunsOnElectricity : Engine
     {
-        EngineRunsOnElectricity(float i_MaxBatteryLife) : base(i_MaxBatteryLife)
+        public EngineRunsOnElectricity (float i_MaxBatteryLife) : base(i_MaxBatteryLife)
         {
 
         }
@@ -17,6 +17,10 @@ namespace Ex03.GarageLogic
             bool trueInput = float.TryParse(i_AmountToFill, out amountToFill);
             if (trueInput)
             {
+                if (amountToFill < 0)
+                {
+                    throw new ArgumentException("can not charge the battary with negative number");
+                }
                 if (amountToFill < MaxEnergy - CurrentEnergyInVehicle)
                 {
                     CurrentEnergyInVehicle += amountToFill;
@@ -30,6 +34,15 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("invalid input, the input should be a number!!");
             }
+        }
+        public override string ToString()
+        {
+            StringBuilder engineOnFuelInfo = new StringBuilder();
+            engineOnFuelInfo.AppendFormat(
+@"Maximum Battary life in Hours: {0}
+The Current  Battary Time : {1}%",
+ MaxEnergy, CurrentEnergyInVehicle);
+            return engineOnFuelInfo.ToString();
         }
     }
 }

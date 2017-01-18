@@ -27,6 +27,10 @@ namespace Ex03.GarageLogic
                 bool trueInput = float.TryParse(i_AmountToFillInEngine, out amountToFillInEngine);
                 if (trueInput)
                 {
+                    if (amountToFillInEngine < 0)
+                    {
+                        throw new ArgumentException("Can not fill negative number of liters to the tank");
+                    }
                     if (amountToFillInEngine < amountOfRemainingLiters)
                     {
                         CurrentEnergyInVehicle += amountToFillInEngine;
@@ -45,6 +49,17 @@ namespace Ex03.GarageLogic
             {
                 throw new ArgumentException("the fuel type is not correct");
             }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder engineOnFuelInfo = new StringBuilder();
+            engineOnFuelInfo.AppendFormat(
+@"Fuel Type: {0}
+Maximum Fuel Tank: {1}
+The Amount Of Liters In The Tank : {2}",
+r_EngineFuelType, MaxEnergy, CurrentEnergyInVehicle);
+            return engineOnFuelInfo.ToString();
         }
     }
 }

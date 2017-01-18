@@ -7,19 +7,16 @@ namespace Ex03.GarageLogic
     public abstract class Vehicle
     {
         private readonly string r_ModelName;
-        private readonly string r_LicencePlateNumber;
+        private readonly string r_LicensePlateNumber;
         private readonly uint r_NumOfWheels;
-        //private float m_EnergyPrecentageLeft;
         private readonly List<Wheel> r_Wheels;
-        private Engine m_Engine;
+        protected Engine m_Engine;
 
-        public Vehicle(string i_ModelName, string i_LicencePlate, uint i_NumberOfWheels)
+        protected Vehicle(string i_LicensePlate, uint i_NumberOfWheels)
         {
-            r_ModelName = i_ModelName;
-            r_LicencePlateNumber = i_LicencePlate;
+            r_LicensePlateNumber = i_LicensePlate;
             r_NumOfWheels = i_NumberOfWheels;
             r_Wheels = new List<Wheel>();
-            
         }
         public uint NumberOfWheelsInVehicle
         {
@@ -29,12 +26,11 @@ namespace Ex03.GarageLogic
         public Engine EngineOfVehicle
         {
             get { return m_Engine; }
-            set { m_Engine = value; }
         }
 
         public string LicencePlateNumber
         {
-            get { return r_LicencePlateNumber; }
+            get { return r_LicensePlateNumber; }
         }
 
         public List<Wheel> ArrayOfWheels
@@ -52,13 +48,40 @@ namespace Ex03.GarageLogic
             get { return (m_Engine.CurrentEnergyInVehicle * 100) / m_Engine.MaxEnergy; }
         }
 
+        protected void AddWheels(float i_MaxPressureOfWheels)
+        {
+            for (int i = 0; i < r_NumOfWheels; i++)
+            {
+                r_Wheels.Add(new Wheel(i_MaxPressureOfWheels));
+            }
+        }
+
         public override string ToString()
         { 
             StringBuilder vehicleInformation = new StringBuilder();
+            int wheelIndexer=1;
+            vehicleInformation.AppendFormat(
+@"
+License Number: {0}
+Model Name: {1}
+", r_LicensePlateNumber, r_ModelName);
+            foreach (Wheel wheelInVehicle in r_Wheels)
+            {
+                vehicleInformation.AppendFormat(
+@"Wheel Number: {0}
+Wheel Manufacture Name: {1}
+Wheel Current Air Pressure: {2}
+Wheel Maximum Air Pressure: {3}
+", wheelIndexer, wheelInVehicle.ManufacturerName
+, wheelInVehicle.CurrentAirPressure, wheelInVehicle.MaxAirPressure);
+                wheelIndexer++;
+            }
 
-            return vehicleInformation;
-//            vehicleInformation.AppendFormat( /////////// TODO
-//@""
+            vehicleInformation.AppendFormat(
+@"Current Energy: {0}%
+", EnergyPrecentageLeft);
+            return vehicleInformation.ToString() + m_Engine.ToString();
+            
         }
     }
 }

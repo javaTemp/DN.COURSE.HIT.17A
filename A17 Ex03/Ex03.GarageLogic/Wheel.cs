@@ -6,13 +6,21 @@ namespace Ex03.GarageLogic
 {
     class Wheel
     {
-        private readonly string r_ManufacturerName;
+        private string m_ManufacturerName;
         private float m_CurrentAirPressure;
         private readonly float r_MaxAirPressure;
+        private const float k_TrashedValueOfCurrentAirPressure = 0;
 
+        public Wheel(float i_MaxAirPressure)
+        {
+            this.r_MaxAirPressure = i_MaxAirPressure;
+            this.m_CurrentAirPressure = k_TrashedValueOfCurrentAirPressure;
+        }
+        
         public string ManufacturerName
         {
-            get { return r_ManufacturerName; }
+            get { return m_ManufacturerName; }
+            set { m_ManufacturerName = value; }
         }
 
         public float CurrentAirPressure
@@ -43,13 +51,6 @@ namespace Ex03.GarageLogic
         {
             get { return r_MaxAirPressure; }
             
-        }
-
-        public Wheel(string i_ManufacturerName, float i_CurrentAirPressure, float i_MaxAirPressure)
-        {
-            this.r_ManufacturerName = i_ManufacturerName;
-            this.m_CurrentAirPressure = i_CurrentAirPressure;
-            this.r_MaxAirPressure = i_MaxAirPressure;
         }
 
         //private float airpressuredelta()
@@ -85,7 +86,7 @@ namespace Ex03.GarageLogic
             StringBuilder wheelInformation = new StringBuilder();
             wheelInformation.AppendFormat(
 @"Wheel Manufacturer Name: {0}
-Air Pressure in Wheel: {1}", r_ManufacturerName, m_CurrentAirPressure);
+Air Pressure in Wheel: {1}", m_ManufacturerName, m_CurrentAirPressure);
 
             return wheelInformation.ToString();
         }
